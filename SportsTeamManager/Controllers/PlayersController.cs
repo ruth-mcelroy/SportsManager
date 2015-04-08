@@ -10,9 +10,9 @@ using SportsTeamManager.Models;
 
 namespace SportsTeamManager.Controllers
 {
-    public class TeamMembersController : Controller
+    public class PlayersController : Controller
     {
-        private TeamMemberDBContext db = new TeamMemberDBContext();
+        private PlayerDBContext db = new PlayerDBContext();
 
         // GET: TeamMembers
         public ActionResult Index()
@@ -27,7 +27,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamMember teamMember = db.Players.Find(id);
+            Player teamMember = db.Players.Find(id);
             if (teamMember == null)
             {
                 return HttpNotFound();
@@ -46,16 +46,16 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IRFUNumber,Name,Position")] TeamMember teamMember)
+        public ActionResult Create([Bind(Include = "ID,IRFUNumber,Name,Position")] Player Player)
         {
             if (ModelState.IsValid)
             {
-                db.Players.Add(teamMember);
+                db.Players.Add(Player);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(teamMember);
+            return View(Player);
         }
 
         // GET: TeamMembers/Edit/5
@@ -65,7 +65,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamMember teamMember = db.Players.Find(id);
+            Player teamMember = db.Players.Find(id);
             if (teamMember == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IRFUNumber,Name,Position")] TeamMember teamMember)
+        public ActionResult Edit([Bind(Include = "ID,IRFUNumber,Name,Position")] Player teamMember)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamMember teamMember = db.Players.Find(id);
+            Player teamMember = db.Players.Find(id);
             if (teamMember == null)
             {
                 return HttpNotFound();
@@ -109,7 +109,7 @@ namespace SportsTeamManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TeamMember teamMember = db.Players.Find(id);
+            Player teamMember = db.Players.Find(id);
             db.Players.Remove(teamMember);
             db.SaveChanges();
             return RedirectToAction("Index");

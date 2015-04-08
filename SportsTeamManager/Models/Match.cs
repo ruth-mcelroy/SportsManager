@@ -10,6 +10,21 @@ namespace SportsTeamManager.Models
         public string Opposition { get; set; }
         public DateTime Time { get; set; }
         public Competition Competition { get; set; }
+
+
+
+
+        public Match()
+        {
+            using (PlayerDBContext db = new PlayerDBContext())
+            {
+
+                foreach (Player p in db.Players)
+                {
+                    Availability a = new Availability(p, this);
+                }
+            }
+        }
     }
 
     public class MatchDBContext : DbContext

@@ -10,7 +10,7 @@ using SportsTeamManager.Models;
 
 namespace SportsTeamManager.Controllers
 {
-    public class AvailabilitiesController : Controller
+    public class AvailabilityController : Controller
     {
         private AvailabilityDBContext db = new AvailabilityDBContext();
 
