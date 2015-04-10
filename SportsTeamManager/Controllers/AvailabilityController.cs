@@ -17,7 +17,7 @@ namespace SportsTeamManager.Controllers
         // GET: Availabilities
         public ActionResult Index()
         {
-            return View(db.Matches.ToList());
+            return View(db.Available.ToList());
         }
 
         // GET: Availabilities/Details/5
@@ -27,7 +27,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Matches.Find(id);
+            Availability availability = db.Available.Find(id);
             if (availability == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace SportsTeamManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Matches.Add(availability);
+                db.Available.Add(availability);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Matches.Find(id);
+            Availability availability = db.Available.Find(id);
             if (availability == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Matches.Find(id);
+            Availability availability = db.Available.Find(id);
             if (availability == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace SportsTeamManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Availability availability = db.Matches.Find(id);
-            db.Matches.Remove(availability);
+            Availability availability = db.Available.Find(id);
+            db.Available.Remove(availability);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -27,6 +27,6 @@ namespace SportsTeamManager.Models
 
     public class AvailabilityDBContext : DbContext
     {
-        public DbSet<Availability> Matches { get; set; }
+        public DbSet<Availability> Available { get; set; }
     }
 }
