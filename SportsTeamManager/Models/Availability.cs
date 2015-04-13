@@ -9,7 +9,7 @@ namespace SportsTeamManager.Models
     public class Availability
     {
         public int ID { get; set; }
-        public Player Player { get; set; }
+        public Player Player { get; set; }              //Foreign key not working. Are dbContexts correct?
         public Match Match { get; set; }
         public bool Available { get; set; }
 

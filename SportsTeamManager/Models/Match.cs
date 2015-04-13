@@ -16,10 +16,10 @@ namespace SportsTeamManager.Models
 
         public Match()
         {
-            using (PlayerDBContext db = new PlayerDBContext())
+            using (PlayerDBContext db = new PlayerDBContext())                      
             {
 
-                foreach (Player p in db.Players)
+                foreach (Player p in db.Players)                            //Not working. Want every time a match created creates an availability object for that match for each player
                 {
                     Availability a = new Availability(p, this);
                 }

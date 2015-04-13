@@ -16,64 +16,52 @@ namespace SportsTeamManager.Controllers
         private MatchDBContext matchesDb = new MatchDBContext();
         private AvailabilityDBContext availabilityDb = new AvailabilityDBContext();
 
-        [Route("matches")]
-        public IEnumerable<Match> GetAllMatches()
-        {
-            return matchesDb.Matches.ToList();
-        }
-
-        [Route("matches/date")]
-        public Match GetMatchDate(DateTime date)
-        {
-            var match = matchesDb.Matches.FirstOrDefault((m) => m.Time == date);
-            return match;
-        }
 
 
-        [Route("player/name")]
-        public Player GetPlayerName(string name)
+        [Route("player/{Irfu}")]
+        public Player GetPlayerName(string Irfu)                                                //First thing mobile app does gets correct player by them entering their irfu number
         {
-            var player = playerDb.Players.Where(p => p.Name == name);
-            return (Player)player;
-        }
-
-        [Route("player/IRFU")]
-        public Player GetPlayerName(string Irfu)
-        {
-            var player = playerDb.Players.Where(p => p.IRFUNumber == Irfu);
+            var player = playerDb.Players.FirstOrDefault(p => p.IRFUNumber == Irfu);
             return (Player)player;
         }
 
 
-        [Route("availablity")]
-        public Availability GetAvailabilityPlayerMatch(Player p, Match m)           //or do inputs need to be stringd or ints? change to ids of player and match?
+        [Route("availablity/{id}")]                                                                         //Get id from player id of player found above
+        public IEnumerable<Availability> GetAvailabilityAllMatchesThisPlayer(int id)           
         {
-            var available = availabilityDb.Available.Where(a => a.Player == p)
-                                                    .Where(a => a.Match == m);
-            return (Availability)available;
+            var isAvailable = availabilityDb.Available.Where(a => a.Player.ID == id);
+
+            return isAvailable;
         }
 
-        [Route("availablity/player")]
-        public IEnumerable<Availability> GetAvailabilityPlayerMatch(Player p)
+        [Route("availablity/{id}/{date:DateTime}")]                                                             //Get availability for matches on a given date(Further work can try and do a between dates find)
+        public Availability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
         {
-            var available = availabilityDb.Available.Where(a => a.Player == p);
-            return (IEnumerable<Availability>)available;
+            var isAvailableDate = availabilityDb.Available.Where(a => a.Player.ID == id)
+                                                          .FirstOrDefault(a => a.Match.Time == date);
+
+            return (Availability)isAvailableDate;
         }
 
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+
+
+
+
+        [Route("availability/change/{playerId}/{MatchId}/{availableParam}")]                                         //Put availability because availability object automatically set to false so replacing availability object not creating new one
+        public Availability PutAvailability(int playerId, int matchId, bool availableParam)
         {
+            Availability changeAvail = availabilityDb.Available.Where(a => a.Player.ID == playerId)
+                                                            .FirstOrDefault(a => a.Match.ID == matchId);
+
+            if(changeAvail.Available != availableParam)                                                             //Don't think this is correct, open database and change record directly? Get an example to look at.
+            {
+                changeAvail.Available = availableParam;
+            }
+
+            return changeAvail;
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
     }
 }
