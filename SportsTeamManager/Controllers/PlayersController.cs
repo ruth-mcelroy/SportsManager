@@ -12,6 +12,7 @@ namespace SportsTeamManager.Controllers
 {
     public class PlayersController : Controller
     {
+        
         private PlayerDBContext db = new PlayerDBContext();
 
         // GET: TeamMembers

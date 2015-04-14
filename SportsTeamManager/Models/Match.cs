@@ -16,6 +16,7 @@ namespace SportsTeamManager.Models
 
         public Match()
         {
+
             using (PlayerDBContext db = new PlayerDBContext())                      
             {
 
@@ -29,6 +30,11 @@ namespace SportsTeamManager.Models
 
     public class MatchDBContext : DbContext
     {
+        public MatchDBContext()
+            : base("DefaultConnection")
+        {
+            Database.SetInitializer<MatchDBContext>(new DropCreateDatabaseAlways<MatchDBContext>());      //Only for the moment, to be changed only development is complete
+        }
         public DbSet<Match> Matches { get; set; }
     }
 }
