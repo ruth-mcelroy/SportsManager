@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
+
 namespace SportsTeamManager.Controllers
 {
     [RoutePrefix("api")]
@@ -18,7 +19,7 @@ namespace SportsTeamManager.Controllers
 
 
 
-        [Route("player/{Irfu}")]
+        [Route("/player/{Irfu}")]
         public Player GetPlayerName(string Irfu)                                                //First thing mobile app does gets correct player by them entering their irfu number
         {
             var player = playerDb.Players.FirstOrDefault(p => p.IRFUNumber == Irfu);
