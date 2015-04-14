@@ -11,7 +11,7 @@ namespace SportsTeamManager.Models
     public class Player
     {
         public int ID { get; set; }
-        public string IRFUNumber { get; set; }
+        public string IRFUNumber { get; set; }      //Rugby registration number unique and known by each player
         public string Name { get; set; }
         public Position Position { get; set; }
     }

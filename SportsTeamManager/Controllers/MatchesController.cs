@@ -90,7 +90,7 @@ namespace SportsTeamManager.Controllers
         }
 
         // GET: Matches/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id)                         //On delete want to cascade delete all availability objects asscoiated. Sme on delete player.
         {
             if (id == null)
             {
