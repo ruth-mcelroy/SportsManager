@@ -17,7 +17,14 @@ namespace SportsTeamManager.Controllers
         // GET: Availabilities
         public ActionResult Index()
         {
-            return View(db.Available.ToList());
+            //Player p1 = new Player {Name = "Test", IRFUNumber  = "1", Position = Position.Hooker};
+            //Match m1 = new Match {Opposition = "TestTeam"};
+
+
+            //Availability A1 = new Availability { Player = p1, Match = m1 };
+
+
+            return View(db.Availabilitys.ToList());
         }
 
         // GET: Availabilities/Details/5
@@ -27,7 +34,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Available.Find(id);
+            Availability availability = db.Availabilitys.Find(id);
             if (availability == null)
             {
                 return HttpNotFound();
@@ -50,7 +57,7 @@ namespace SportsTeamManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Available.Add(availability);
+                db.Availabilitys.Add(availability);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +72,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Available.Find(id);
+            Availability availability = db.Availabilitys.Find(id);
             if (availability == null)
             {
                 return HttpNotFound();
@@ -96,7 +103,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Available.Find(id);
+            Availability availability = db.Availabilitys.Find(id);
             if (availability == null)
             {
                 return HttpNotFound();
@@ -109,8 +116,8 @@ namespace SportsTeamManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Availability availability = db.Available.Find(id);
-            db.Available.Remove(availability);
+            Availability availability = db.Availabilitys.Find(id);
+            db.Availabilitys.Remove(availability);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -21,7 +21,7 @@ namespace SportsTeamManager.Models
         public PlayerDBContext()
             : base("DefaultConnection")
         {
-            Database.SetInitializer<PlayerDBContext>(new DropCreateDatabaseAlways<PlayerDBContext>());      //Only for the moment, to be changed only development is complete
+            Database.SetInitializer<PlayerDBContext>(new DropCreateDatabaseIfModelChanges<PlayerDBContext>());      //Only for the moment, to be changed only development is complete
         }
 
         public DbSet<Player> Players { get; set; }
