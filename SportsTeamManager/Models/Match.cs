@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
 namespace SportsTeamManager.Models
@@ -7,8 +8,13 @@ namespace SportsTeamManager.Models
     public enum Competition { AIL1League,AIL2League, AICup, AIBowl, AIPlate, LeinsterCup}
     public class Match
     {
-        public int ID { get; set; }
+        [Key]
+        public int MatchID { get; set; }
+
+        [Required] 
         public string Opposition { get; set; }
+
+        [Required] 
         public DateTime Time { get; set; }
         public Competition Competition { get; set; }
 

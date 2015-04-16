@@ -17,11 +17,7 @@ namespace SportsTeamManager.Controllers
         // GET: Availabilities
         public ActionResult Index()
         {
-            //Player p1 = new Player {Name = "Test", IRFUNumber  = "1", Position = Position.Hooker};
-            //Match m1 = new Match {Opposition = "TestTeam"};
-
-
-            //Availability A1 = new Availability { Player = p1, Match = m1 };
+           
 
 
             return View(db.Availabilitys.ToList());
