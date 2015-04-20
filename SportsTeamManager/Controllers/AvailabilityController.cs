@@ -17,7 +17,7 @@ namespace SportsTeamManager.Controllers
         // GET: Availabilities
         public ActionResult Index()
         {
-            return View(db.Availabilitys.ToList());     //Does this show player and match id? Show player and match names and date instead.
+            return View(db.Availabilitys.ToList());     
         }
 
         // GET: Availabilities/Details/5

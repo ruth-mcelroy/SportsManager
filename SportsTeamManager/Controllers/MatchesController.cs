@@ -13,6 +13,7 @@ namespace SportsTeamManager.Controllers
     public class MatchesController : Controller
     {
         private MatchDBContext db = new MatchDBContext();
+        private AvailabilityDBContext availDb = new AvailabilityDBContext();
 
         // GET: Matches
         public ActionResult Index()
@@ -50,8 +51,10 @@ namespace SportsTeamManager.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Matches.Add(match);
                 db.SaveChanges();
+                availDb.SaveChanges();
                 return RedirectToAction("Index");
             }
 

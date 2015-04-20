@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Linq;
 
 namespace SportsTeamManager.Models
 {
@@ -23,18 +24,38 @@ namespace SportsTeamManager.Models
 
         public Match()
         {
+            AvailabilityDBContext availabilityDB = new AvailabilityDBContext();
+            Availability test = new Availability();
 
             using (PlayerDBContext playersDb = new PlayerDBContext())
             {
 
-                IEnumerable<Player> players = playersDb.Players;
+                IEnumerable<int> playersID = playersDb.Players.Select(p=>p.PlayerID );
 
-                foreach (Player p in players)                            //Not working. Want every time a match created creates an availability object for that match for each player
-                {
-                    Availability a = new Availability(p, this);
+                foreach (int p in playersID)                            //Not working. Want every time a match created creates an availability object for that match for each player
+                { 
+                    Availability a = new Availability(p, this.MatchID);
+                    availabilityDB.Availabilitys.Add(a);
+                    availabilityDB.SaveChanges();
                 }
             }
         }
+    }
+
+
+    public class AvailabilityDBContext : DbContext
+    {
+
+        public AvailabilityDBContext()
+            : base("DefaultConnection")
+        {
+            Database.SetInitializer<AvailabilityDBContext>(new CreateDatabaseIfNotExists<AvailabilityDBContext>());
+        }
+        public DbSet<Availability> Availabilitys { get; set; }
+
+        public System.Data.Entity.DbSet<SportsTeamManager.Models.Match> Matches { get; set; }
+
+        public System.Data.Entity.DbSet<SportsTeamManager.Models.Player> Players { get; set; }
     }
 
     public class MatchDBContext : DbContext
@@ -45,6 +66,7 @@ namespace SportsTeamManager.Models
             Database.SetInitializer<MatchDBContext>(new CreateDatabaseIfNotExists<MatchDBContext>());      
         }
         public DbSet<Match> Matches { get; set; }
-        public DbSet<Availability> Availabilitys { get; set; }
+        public System.Data.Entity.DbSet<SportsTeamManager.Models.Availability> Availabilitys { get; set; }
+
     }
 }

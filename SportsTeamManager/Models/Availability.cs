@@ -14,40 +14,26 @@ namespace SportsTeamManager.Models
         public int AvailabilityID { get; set; }
 
         [ForeignKey("Player")] 
-        public int PlayerID { get; set; }
-        public Player Player { get; set; }              //Foreign key not working. Are dbContexts correct?
+        public int PlayerID { get; set; }           //Foreign Key for Player
+        public Player Player { get; set; }           //Reference to Player   
 
-        [ForeignKey("Match")] 
-        public int MatchID { get; set; }
-        public Match Match { get; set; }
+        [ForeignKey("Match")]
+        public int MatchID { get; set; }         //Foreign Key for Match      
+        public Match Match { get; set; }        //Reference to Match
 
 
         public bool Available { get; set; }
 
-        public Availability(Player player, Match match)
+        public Availability(int playerID, int matchID)
         {
-            Player = player;
-            Match = match;
+            PlayerID = playerID;
+            MatchID = matchID;
         }
-
         public Availability()
-        {
+        { }
 
-        }
+
     }
 
-    public class AvailabilityDBContext : DbContext
-    {
 
-        public AvailabilityDBContext()
-            : base("DefaultConnection")
-        {
-            Database.SetInitializer<AvailabilityDBContext>(new CreateDatabaseIfNotExists<AvailabilityDBContext>());     
-        }
-        public DbSet<Availability> Availabilitys { get; set; }
-
-        public System.Data.Entity.DbSet<SportsTeamManager.Models.Match> Matches { get; set; }
-
-        public System.Data.Entity.DbSet<SportsTeamManager.Models.Player> Players { get; set; }
-    }
 }
