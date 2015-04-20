@@ -32,7 +32,7 @@ namespace SportsTeamManager.Controllers
         {
             using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
             {
-                var isAvailable = availabilityDb.Availabilitys.Where(a => a.Player.ID == id);
+                var isAvailable = availabilityDb.Availabilitys.Where(a => a.PlayerID == id);
 
                 return isAvailable;
             }
@@ -45,7 +45,7 @@ namespace SportsTeamManager.Controllers
         {
             using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
             {
-                var isAvailableDate = availabilityDb.Availabilitys.Where(a => a.Player.ID == id)
+                var isAvailableDate = availabilityDb.Availabilitys.Where(a => a.PlayerID == id)
                                                               .FirstOrDefault(a => a.Match.Time == date);
 
                 return (Availability)isAvailableDate;
@@ -62,8 +62,8 @@ namespace SportsTeamManager.Controllers
         {
             using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
             {
-                Availability changeAvail = availabilityDb.Availabilitys.Where(a => a.Player.ID == playerId)
-                                                                .FirstOrDefault(a => a.Match.ID == matchId);
+                Availability changeAvail = availabilityDb.Availabilitys.Where(a => a.PlayerID == playerId)
+                                                                .FirstOrDefault(a => a.MatchID == matchId);
 
                 if (changeAvail.Available != availableParam)                                                             //Don't think this is correct, open database and change record directly? Get an example to look at.
                 {

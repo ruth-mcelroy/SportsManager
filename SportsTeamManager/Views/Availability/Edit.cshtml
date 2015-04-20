@@ -15,7 +15,15 @@
         <h4>Availability</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.AvailabilityID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Player.Name, "Name", htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Match.Opposition, "Opposition", htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })

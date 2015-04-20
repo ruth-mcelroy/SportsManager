@@ -42,8 +42,12 @@ namespace SportsTeamManager.Models
         public AvailabilityDBContext()
             : base("DefaultConnection")
         {
-            Database.SetInitializer<AvailabilityDBContext>(new DropCreateDatabaseIfModelChanges<AvailabilityDBContext>());      //Only for the moment, to be changed only development is complete
+            Database.SetInitializer<AvailabilityDBContext>(new CreateDatabaseIfNotExists<AvailabilityDBContext>());     
         }
         public DbSet<Availability> Availabilitys { get; set; }
+
+        public System.Data.Entity.DbSet<SportsTeamManager.Models.Match> Matches { get; set; }
+
+        public System.Data.Entity.DbSet<SportsTeamManager.Models.Player> Players { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Opposition,Time,Competition")] Match match)
+        public ActionResult Create([Bind(Include = "MatchID,Opposition,Time,Competition")] Match match)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Opposition,Time,Competition")] Match match)
+        public ActionResult Edit([Bind(Include = "MatchID,Opposition,Time,Competition")] Match match)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace SportsTeamManager.Controllers
         }
 
         // GET: Matches/Delete/5
-        public ActionResult Delete(int? id)                         //On delete want to cascade delete all availability objects asscoiated. Sme on delete player.
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {

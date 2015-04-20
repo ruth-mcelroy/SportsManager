@@ -6,13 +6,18 @@
 
 <h2>Index</h2>
 
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Player.Name)
             @Html.DisplayNameFor(model => model.Match.Opposition)
-            @Html.DisplayNameFor(model => model.Match.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Player.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Available)
         </th>
         <th></th>
@@ -21,14 +26,18 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Player.Name)
             @Html.DisplayFor(modelItem => item.Match.Opposition)
-            @Html.DisplayFor(modelItem => item.Match.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Available)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.AvailabilityID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AvailabilityID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AvailabilityID })
         </td>
     </tr>
 }

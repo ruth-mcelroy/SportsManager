@@ -21,20 +21,20 @@ namespace SportsTeamManager.Models
 
 
 
-    //    public Match()
-    //    {
+        public Match()
+        {
 
-    //        using (PlayerDBContext playersDb = new PlayerDBContext())                      
-    //        {
+            using (PlayerDBContext playersDb = new PlayerDBContext())
+            {
 
-    //            IEnumerable<Player> players = playersDb.Players;
+                IEnumerable<Player> players = playersDb.Players;
 
-    //            foreach (Player p in players)                            //Not working. Want every time a match created creates an availability object for that match for each player
-    //            {
-    //                Availability a = new Availability(p, this);
-    //            }
-    //        }
-    //    }
+                foreach (Player p in players)                            //Not working. Want every time a match created creates an availability object for that match for each player
+                {
+                    Availability a = new Availability(p, this);
+                }
+            }
+        }
     }
 
     public class MatchDBContext : DbContext
@@ -42,8 +42,9 @@ namespace SportsTeamManager.Models
         public MatchDBContext()
             : base("DefaultConnection")
         {
-            Database.SetInitializer<MatchDBContext>(new DropCreateDatabaseIfModelChanges<MatchDBContext>());      //Only for the moment, to be changed only development is complete
+            Database.SetInitializer<MatchDBContext>(new CreateDatabaseIfNotExists<MatchDBContext>());      
         }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Availability> Availabilitys { get; set; }
     }
 }
