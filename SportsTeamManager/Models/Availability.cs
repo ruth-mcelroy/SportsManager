@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
+
 namespace SportsTeamManager.Models
 {
     public class Availability
@@ -14,20 +15,24 @@ namespace SportsTeamManager.Models
         public int AvailabilityID { get; set; }
 
         [ForeignKey("Player")] 
+        [Required]
         public int PlayerID { get; set; }
-        public Player Player { get; set; }              //Foreign key not working. Are dbContexts correct?
+        public Player Player { get; set; }              
 
-        [ForeignKey("Match")] 
+        [ForeignKey("Match")]
+        [Required]
         public int MatchID { get; set; }
         public Match Match { get; set; }
 
 
         public bool Available { get; set; }
 
-        public Availability(Player player, Match match)
+
+
+        public Availability(int playerId, int matchId)      //Constructor called from match constructor 
         {
-            Player = player;
-            Match = match;
+            this.PlayerID = playerId;                   //Gets to here and then PlayerId is not set to instance of an object??
+            this.MatchID = matchId;
         }
 
         public Availability()
