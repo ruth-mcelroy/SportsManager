@@ -20,34 +20,23 @@ namespace SportsTeamManager.Models
 
 
 
-
-        public Match()
+        public void CreateAvailable(Match m)           //Tried to do in constructor but match object not created yet
         {
-            AvailabilityDBContext availDb = new AvailabilityDBContext();
+            Context db = new Context();
+            IEnumerable<Player> players = db.Players;
 
-            using (PlayerDBContext playersDb = new PlayerDBContext())
+            foreach (Player p in players)                            //Not working. Want every time a match created creates an availability object for that match for each player
             {
 
-                IEnumerable<Player> players = playersDb.Players;
-
-                foreach (Player p in players)                            //Not working. Want every time a match created creates an availability object for that match for each player
-                {
-                    Availability a = new Availability(p.PlayerID, this.MatchID);        //Just trying this. If on previous created object while creating this object. 
-                    availDb.Availabilitys.Add(a);
-                }
+                Availability a = new Availability{PlayerID = p.PlayerID, MatchID = m.MatchID};        //Just trying this. If on previous created object while creating this object. 
+                db.Availabilities.Add(a);
             }
-            availDb.SaveChanges();
+
+            db.SaveChanges();
         }
+
+
+
     }
 
-    public class MatchDBContext : DbContext
-    {
-        public MatchDBContext()
-            : base("DefaultConnection")
-        {
-            Database.SetInitializer<MatchDBContext>(new CreateDatabaseIfNotExists<MatchDBContext>());      
-        }
-        public DbSet<Match> Matches { get; set; }
-        public DbSet<Availability> Availabilitys { get; set; }
-    }
 }

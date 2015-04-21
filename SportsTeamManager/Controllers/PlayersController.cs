@@ -12,7 +12,7 @@ namespace SportsTeamManager.Controllers
 {
     public class PlayersController : Controller
     {
-        private PlayerDBContext db = new PlayerDBContext();
+        private Context db = new Context();
 
         // GET: Players
         public ActionResult Index()

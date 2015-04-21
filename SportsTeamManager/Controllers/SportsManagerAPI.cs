@@ -19,7 +19,7 @@ namespace SportsTeamManager.Controllers
         [Route("player/{Irfu}")]
         public Player GetPlayerName(string Irfu)                                                //First thing mobile app does gets correct player by them entering their irfu number
         {
-            using (PlayerDBContext playersDb = new PlayerDBContext())
+            using (Context playersDb = new Context())
             {
                 var player = playersDb.Players.FirstOrDefault(p => p.IRFUNumber == Irfu);
                 return (Player)player;
@@ -30,9 +30,9 @@ namespace SportsTeamManager.Controllers
         [Route("availablity/{id}")]                                                                         //Get id from player id of player found above
         public IEnumerable<Availability> GetAvailabilityAllMatchesThisPlayer(int id)
         {
-            using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
+            using (Context availabilityDb = new Context())
             {
-                var isAvailable = availabilityDb.Availabilitys.Where(a => a.PlayerID == id);
+                var isAvailable = availabilityDb.Availabilities.Where(a => a.PlayerID == id);
 
                 return isAvailable;
             }
@@ -43,9 +43,9 @@ namespace SportsTeamManager.Controllers
         [Route("availablity/{id}/{date:DateTime}")]                                                             //Get availability for matches on a given date(Further work can try and do a between dates find)
         public Availability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
         {
-            using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
+            using (Context availabilityDb = new Context())
             {
-                var isAvailableDate = availabilityDb.Availabilitys.Where(a => a.PlayerID == id)
+                var isAvailableDate = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
                                                               .FirstOrDefault(a => a.Match.Time == date);
 
                 return (Availability)isAvailableDate;
@@ -60,9 +60,9 @@ namespace SportsTeamManager.Controllers
         [Route("availability/change/{playerId}/{MatchId}/{availableParam}")]                                         //Put availability because availability object automatically set to false so replacing availability object not creating new one
         public Availability PutAvailability(int playerId, int matchId, bool availableParam)
         {
-            using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
+            using (Context availabilityDb = new Context())
             {
-                Availability changeAvail = availabilityDb.Availabilitys.Where(a => a.PlayerID == playerId)
+                Availability changeAvail = availabilityDb.Availabilities.Where(a => a.PlayerID == playerId)
                                                                 .FirstOrDefault(a => a.MatchID == matchId);
 
                 if (changeAvail.Available != availableParam)                                                             //Don't think this is correct, open database and change record directly? Get an example to look at.

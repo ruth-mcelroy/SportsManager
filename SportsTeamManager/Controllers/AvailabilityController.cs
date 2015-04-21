@@ -12,12 +12,12 @@ namespace SportsTeamManager.Controllers
 {
     public class AvailabilityController : Controller        
     {
-        private AvailabilityDBContext db = new AvailabilityDBContext();
+        private Context db = new Context();
 
         // GET: Availabilities
         public ActionResult Index()
         {
-            return View(db.Availabilitys.ToList());     //Does this show player and match id? Show player and match names and date instead.
+            return View(db.Availabilities.ToList());     //Does this show player and match id? Show player and match names and date instead.
         }
 
         // GET: Availabilities/Details/5
@@ -27,7 +27,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Availabilitys.Find(AvailabilityID);
+            Availability availability = db.Availabilities.Find(AvailabilityID);
             if (availability == null)
             {
                 return HttpNotFound();
@@ -44,7 +44,7 @@ namespace SportsTeamManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Availability availability = db.Availabilitys.Find(id);
+            Availability availability = db.Availabilities.Find(id);
             if (availability == null)
             {
                 return HttpNotFound();
