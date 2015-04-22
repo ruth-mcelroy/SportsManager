@@ -26,53 +26,56 @@ namespace SportsTeamManager.Controllers
             }
         }
 
-        //Get:  /api/availablity/{id}  Gets the availabilities for the player assosiated with the id
+        //Get:  /api/availability/{id}  Gets the availabilities for the player assosiated with the id
         [HttpGet]
-        [Route("availablity/{id}")]                                                                         //Get id from player id of player found in GetPlayer
-        public IEnumerable<Availability> GetAvailabilityPlayer(int id)
+        [Route("availability/{id}")]                                                                         //Get id from player id of player found in GetPlayer
+        public IEnumerable<ClientAvailability> GetAvailabilityPlayer(int id)
         {
-            using (Context availabilityDb = new Context())
-            {
-                var isAvailable = availabilityDb.Availabilities.Where(a => a.PlayerID == id);
-
+            Context availabilityDb = new Context();
+            
+                var isAvailable = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
+                                                                .Select (a=> (new ClientAvailability{ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available }));
                 return isAvailable;
-            }
         }
 
-        //Get:  /api/availablity/{id}/{date:DateTime}  Gets the availabilities for the player assosiated with the id on this date
+        //Get:  /api/availability/{id}/yyyy-mm-dd Gets the availabilities for the player assosiated with the id on this date
         [HttpGet]
-        [Route("availablity/{id}/{date:DateTime}")]                                                                                     //Further work can do a between date A and Date B 
-        public Availability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
+        [Route("availability/{id}/{date:DateTime}")]                                                                                     //Further work can do a between date A and Date B 
+        public ClientAvailability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
         {
             using (Context availabilityDb = new Context())
             {
                 var isAvailableDate = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
-                                                              .FirstOrDefault(a => a.Match.Time == date);
+                                                                    .Select(a => new ClientAvailability { ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available })
+                                                                    .FirstOrDefault(a => a.Time == date);
+                                                                    
 
-                return (Availability)isAvailableDate;
+                return (ClientAvailability)isAvailableDate;
             }
         }
 
 
 
 
-        //Put:  /api/availablity/{playerId}/{MatchId}/{availableParam}  Change the availability for this player and the match selected
+        //Put:  /api/availability/{playerId}/{MatchId}/{availableParam}  Change the availability for this player and the match selected
         [HttpPut]
         [Route("availability/change/{playerId}/{MatchId}/{availableParam}")]                                         //Put availability because availability object already made,  replacing availability object not creating new one
-        public Availability PutAvailability(int playerId, int matchId, bool availableParam)
+        public Availability PutAvailability(int playerId, int matchId, [FromUri]bool availableParam)
         {
-            using (Context availabilityDb = new Context())
+            Context availabilityDb = new Context();
+            
+            Availability changeAvail = availabilityDb.Availabilities.Where(a => a.Player.PlayerID == playerId)
+                                                                .FirstOrDefault(a => a.Match.MatchID == matchId);
+
+            if (changeAvail.Available != availableParam)                                       
             {
-                Availability changeAvail = availabilityDb.Availabilities.Where(a => a.PlayerID == playerId)
-                                                                .FirstOrDefault(a => a.MatchID == matchId);
-
-                if (changeAvail.Available != availableParam)                                       
-                {
-                    changeAvail.Available = availableParam;
-                }
-
-                return changeAvail;
+                changeAvail.Available = availableParam;
+                availabilityDb.Entry(changeAvail).State = System.Data.Entity.EntityState.Modified;
+                availabilityDb.SaveChanges();
             }
+
+            return changeAvail;
+            
         }
 
 

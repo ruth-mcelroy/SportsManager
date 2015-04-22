@@ -33,6 +33,10 @@ namespace SportsTeamManager.Models
             this.MatchID = m;
         }
 
+        public Availability()      //Constructor called from CreateAvailable()
+        {
+        }
+
 
     }
 
