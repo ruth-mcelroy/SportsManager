@@ -16,29 +16,22 @@ namespace SportsTeamManager.Models
 
         [ForeignKey("Player")] 
         public int PlayerID { get; set; }
-        public Player Player { get; set; }              
+        public virtual Player Player { get; set; }              
 
         [ForeignKey("Match")]
         public int MatchID { get; set; }
-        public Match Match { get; set; }
+        public virtual Match Match { get; set; }
 
 
         public bool Available { get; set; }
 
 
 
-        public Availability(int p, int m)      //Constructor called from match constructor 
+        public Availability(int p, int m)      //Constructor called from CreateAvailable()
         {
             this.PlayerID = p;                   
             this.MatchID = m;
         }
-
-        public Availability()
-        {
-
-        }
-
-
 
 
     }

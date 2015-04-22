@@ -12,23 +12,23 @@ namespace SportsTeamManager.Models
         public int MatchID { get; set; }
 
         [Required] 
-        public string Opposition { get; set; }
+        public string Opposition { get; set; }                   //Could be changed into list of possible teams. 
 
         [Required] 
-        public DateTime Time { get; set; }
+        public DateTime Time { get; set; }                      //Split this into date and time on view and edit
         public Competition Competition { get; set; }
 
 
 
-        public void CreateAvailable(Match m)           //Tried to do in constructor but match object not created yet
+        public void CreateAvailable()                           //Creates availability objects for each player on the match object it calls.
         {
             Context db = new Context();
             IEnumerable<Player> players = db.Players;
 
-            foreach (Player p in players)                            //Not working. Want every time a match created creates an availability object for that match for each player
+            foreach (Player p in players)                            
             {
 
-                Availability a = new Availability{PlayerID = p.PlayerID, MatchID = m.MatchID};        //Just trying this. If on previous created object while creating this object. 
+                Availability a = new Availability(p.PlayerID, this.MatchID);        
                 db.Availabilities.Add(a);
             }
 

@@ -14,10 +14,10 @@ namespace SportsTeamManager.Controllers
     {
 
 
-
+        //Get:  /api/player/{Irfu}  Gets the player assosiated with the IRFU(Registration) number
         [HttpGet]
         [Route("player/{Irfu}")]
-        public Player GetPlayerName(string Irfu)                                                //First thing mobile app does gets correct player by them entering their irfu number
+        public Player GetPlayer(string Irfu)                                                //First thing mobile app does gets correct player by them entering their irfu number. Each player will know their id number
         {
             using (Context playersDb = new Context())
             {
@@ -26,9 +26,10 @@ namespace SportsTeamManager.Controllers
             }
         }
 
+        //Get:  /api/availablity/{id}  Gets the availabilities for the player assosiated with the id
         [HttpGet]
-        [Route("availablity/{id}")]                                                                         //Get id from player id of player found above
-        public IEnumerable<Availability> GetAvailabilityAllMatchesThisPlayer(int id)
+        [Route("availablity/{id}")]                                                                         //Get id from player id of player found in GetPlayer
+        public IEnumerable<Availability> GetAvailabilityPlayer(int id)
         {
             using (Context availabilityDb = new Context())
             {
@@ -38,9 +39,9 @@ namespace SportsTeamManager.Controllers
             }
         }
 
-
+        //Get:  /api/availablity/{id}/{date:DateTime}  Gets the availabilities for the player assosiated with the id on this date
         [HttpGet]
-        [Route("availablity/{id}/{date:DateTime}")]                                                             //Get availability for matches on a given date(Further work can try and do a between dates find)
+        [Route("availablity/{id}/{date:DateTime}")]                                                                                     //Further work can do a between date A and Date B 
         public Availability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
         {
             using (Context availabilityDb = new Context())
@@ -55,9 +56,9 @@ namespace SportsTeamManager.Controllers
 
 
 
-
-        [HttpPost]
-        [Route("availability/change/{playerId}/{MatchId}/{availableParam}")]                                         //Put availability because availability object automatically set to false so replacing availability object not creating new one
+        //Put:  /api/availablity/{playerId}/{MatchId}/{availableParam}  Change the availability for this player and the match selected
+        [HttpPut]
+        [Route("availability/change/{playerId}/{MatchId}/{availableParam}")]                                         //Put availability because availability object already made,  replacing availability object not creating new one
         public Availability PutAvailability(int playerId, int matchId, bool availableParam)
         {
             using (Context availabilityDb = new Context())
@@ -65,7 +66,7 @@ namespace SportsTeamManager.Controllers
                 Availability changeAvail = availabilityDb.Availabilities.Where(a => a.PlayerID == playerId)
                                                                 .FirstOrDefault(a => a.MatchID == matchId);
 
-                if (changeAvail.Available != availableParam)                                                             //Don't think this is correct, open database and change record directly? Get an example to look at.
+                if (changeAvail.Available != availableParam)                                       
                 {
                     changeAvail.Available = availableParam;
                 }
