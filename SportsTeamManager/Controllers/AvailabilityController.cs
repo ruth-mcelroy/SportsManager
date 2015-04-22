@@ -53,7 +53,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PlayerID,MatchID,Available")] Availability availability)
+        public ActionResult Edit([Bind(Include = "Player.Name,Match.Opposition,Available")] Availability availability)
         {
             if (ModelState.IsValid)
             {
