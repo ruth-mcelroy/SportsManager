@@ -14,64 +14,68 @@ namespace SportsTeamManager.Controllers
     {
 
 
-
+        //Get:  /api/player/{Irfu}  Gets the player assosiated with the IRFU(Registration) number
         [HttpGet]
         [Route("player/{Irfu}")]
-        public Player GetPlayerName(string Irfu)                                                //First thing mobile app does gets correct player by them entering their irfu number
+        public Player GetPlayer(string Irfu)                                                //First thing mobile app does gets correct player by them entering their irfu number. Each player will know their id number
         {
-            using (PlayerDBContext playersDb = new PlayerDBContext())
+            using (Context playersDb = new Context())
             {
                 var player = playersDb.Players.FirstOrDefault(p => p.IRFUNumber == Irfu);
                 return (Player)player;
             }
         }
 
+        //Get:  /api/availability/{id}  Gets the availabilities for the player assosiated with the id
         [HttpGet]
-        [Route("availablity/{id}")]                                                                         //Get id from player id of player found above
-        public IEnumerable<Availability> GetAvailabilityAllMatchesThisPlayer(int id)
+        [Route("availability/{id}")]                                                                         //Get id from player id of player found in GetPlayer
+        public IEnumerable<ClientAvailability> GetAvailabilityPlayer(int id)
         {
-            using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
-            {
-                var isAvailable = availabilityDb.Availabilitys.Where(a => a.PlayerID == id);
-
+            Context availabilityDb = new Context();
+            
+                var isAvailable = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
+                                                                .Select (a=> (new ClientAvailability{ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available }));
                 return isAvailable;
-            }
         }
 
-
+        //Get:  /api/availability/{id}/yyyy-mm-dd Gets the availabilities for the player assosiated with the id on this date
         [HttpGet]
-        [Route("availablity/{id}/{date:DateTime}")]                                                             //Get availability for matches on a given date(Further work can try and do a between dates find)
-        public Availability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
+        [Route("availability/{id}/{date:DateTime}")]                                                                                     //Further work can do a between date A and Date B 
+        public ClientAvailability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
         {
-            using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
+            using (Context availabilityDb = new Context())
             {
-                var isAvailableDate = availabilityDb.Availabilitys.Where(a => a.PlayerID == id)
-                                                              .FirstOrDefault(a => a.Match.Time == date);
+                var isAvailableDate = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
+                                                                    .Select(a => new ClientAvailability { ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available })
+                                                                    .FirstOrDefault(a => a.Time == date);
+                                                                    
 
-                return (Availability)isAvailableDate;
+                return (ClientAvailability)isAvailableDate;
             }
         }
 
 
 
 
-
-        [HttpPost]
-        [Route("availability/change/{playerId}/{MatchId}/{availableParam}")]                                         //Put availability because availability object automatically set to false so replacing availability object not creating new one
-        public Availability PutAvailability(int playerId, int matchId, bool availableParam)
+        //Put:  /api/availability/{playerId}/{MatchId}/{availableParam}  Change the availability for this player and the match selected
+        [HttpPut]
+        [Route("availability/change/{playerId}/{MatchId}/{availableParam}")]                                         //Put availability because availability object already made,  replacing availability object not creating new one
+        public Availability PutAvailability(int playerId, int matchId, [FromUri]bool availableParam)
         {
-            using (AvailabilityDBContext availabilityDb = new AvailabilityDBContext())
+            Context availabilityDb = new Context();
+            
+            Availability changeAvail = availabilityDb.Availabilities.Where(a => a.Player.PlayerID == playerId)
+                                                                .FirstOrDefault(a => a.Match.MatchID == matchId);
+
+            if (changeAvail.Available != availableParam)                                       
             {
-                Availability changeAvail = availabilityDb.Availabilitys.Where(a => a.PlayerID == playerId)
-                                                                .FirstOrDefault(a => a.MatchID == matchId);
-
-                if (changeAvail.Available != availableParam)                                                             //Don't think this is correct, open database and change record directly? Get an example to look at.
-                {
-                    changeAvail.Available = availableParam;
-                }
-
-                return changeAvail;
+                changeAvail.Available = availableParam;
+                availabilityDb.Entry(changeAvail).State = System.Data.Entity.EntityState.Modified;
+                availabilityDb.SaveChanges();
             }
+
+            return changeAvail;
+            
         }
 
 

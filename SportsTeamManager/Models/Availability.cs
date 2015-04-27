@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
+
 namespace SportsTeamManager.Models
 {
     public class Availability
@@ -14,26 +15,29 @@ namespace SportsTeamManager.Models
         public int AvailabilityID { get; set; }
 
         [ForeignKey("Player")] 
-        public int PlayerID { get; set; }           //Foreign Key for Player
-        public Player Player { get; set; }           //Reference to Player   
+        public int PlayerID { get; set; }
+        public virtual Player Player { get; set; }              
 
         [ForeignKey("Match")]
-        public int MatchID { get; set; }         //Foreign Key for Match      
-        public Match Match { get; set; }        //Reference to Match
+        public int MatchID { get; set; }
+        public virtual Match Match { get; set; }
 
 
         public bool Available { get; set; }
 
-        public Availability(int playerID, int matchID)
+
+
+        public Availability(int p, int m)      //Constructor called from CreateAvailable()
         {
-            PlayerID = playerID;
-            MatchID = matchID;
+            this.PlayerID = p;                   
+            this.MatchID = m;
         }
-        public Availability()
-        { }
+
+        public Availability()      //Constructor called from CreateAvailable()
+        {
+        }
 
 
     }
-
 
 }

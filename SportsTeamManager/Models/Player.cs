@@ -22,14 +22,4 @@ namespace SportsTeamManager.Models
         public Position Position { get; set; }
     }
 
-    public class PlayerDBContext : DbContext
-    {
-        public PlayerDBContext()
-            : base("DefaultConnection")
-        {
-            Database.SetInitializer<PlayerDBContext>(new CreateDatabaseIfNotExists<PlayerDBContext>());      
-        }
-
-        public DbSet<Player> Players { get; set; }
-    }
 }

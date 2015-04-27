@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
-using System.Linq;
 
 namespace SportsTeamManager.Models
 {
@@ -13,60 +12,31 @@ namespace SportsTeamManager.Models
         public int MatchID { get; set; }
 
         [Required] 
-        public string Opposition { get; set; }
+        public string Opposition { get; set; }                   //Could be changed into list of possible teams. 
 
         [Required] 
-        public DateTime Time { get; set; }
+        public DateTime Time { get; set; }                      //Split this into date and time on view and edit
         public Competition Competition { get; set; }
 
 
 
-
-        public Match()
+        public void CreateAvailable()                           //Creates availability objects for each player on the match object it calls.
         {
-            AvailabilityDBContext availabilityDB = new AvailabilityDBContext();
-            Availability test = new Availability();
+            Context db = new Context();
+            IEnumerable<Player> players = db.Players;
 
-            using (PlayerDBContext playersDb = new PlayerDBContext())
+            foreach (Player p in players)                            
             {
 
-                IEnumerable<int> playersID = playersDb.Players.Select(p=>p.PlayerID );
-
-                foreach (int p in playersID)                            //Not working. Want every time a match created creates an availability object for that match for each player
-                { 
-                    Availability a = new Availability(p, this.MatchID);
-                    availabilityDB.Availabilitys.Add(a);
-                    availabilityDB.SaveChanges();
-                }
+                Availability a = new Availability(p.PlayerID, this.MatchID);        
+                db.Availabilities.Add(a);
             }
+
+            db.SaveChanges();
         }
+
+
+
     }
 
-
-    public class AvailabilityDBContext : DbContext
-    {
-
-        public AvailabilityDBContext()
-            : base("DefaultConnection")
-        {
-            Database.SetInitializer<AvailabilityDBContext>(new CreateDatabaseIfNotExists<AvailabilityDBContext>());
-        }
-        public DbSet<Availability> Availabilitys { get; set; }
-
-        public System.Data.Entity.DbSet<SportsTeamManager.Models.Match> Matches { get; set; }
-
-        public System.Data.Entity.DbSet<SportsTeamManager.Models.Player> Players { get; set; }
-    }
-
-    public class MatchDBContext : DbContext
-    {
-        public MatchDBContext()
-            : base("DefaultConnection")
-        {
-            Database.SetInitializer<MatchDBContext>(new CreateDatabaseIfNotExists<MatchDBContext>());      
-        }
-        public DbSet<Match> Matches { get; set; }
-        public System.Data.Entity.DbSet<SportsTeamManager.Models.Availability> Availabilitys { get; set; }
-
-    }
 }

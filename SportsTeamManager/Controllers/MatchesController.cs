@@ -8,12 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using SportsTeamManager.Models;
 
+
 namespace SportsTeamManager.Controllers
 {
     public class MatchesController : Controller
     {
-        private MatchDBContext db = new MatchDBContext();
-        private AvailabilityDBContext availDb = new AvailabilityDBContext();
+       
+        private Context db = new Context();
+        
 
         // GET: Matches
         public ActionResult Index()
@@ -49,12 +51,13 @@ namespace SportsTeamManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MatchID,Opposition,Time,Competition")] Match match)
         {
+            
             if (ModelState.IsValid)
             {
-
                 db.Matches.Add(match);
                 db.SaveChanges();
-                availDb.SaveChanges();
+
+                match.CreateAvailable();                //Creates availability objects assosiated with this match and every player.
                 return RedirectToAction("Index");
             }
 
