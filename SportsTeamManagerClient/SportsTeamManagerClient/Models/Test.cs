@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsTeamManagerClient
+namespace SportsTeamManagerClient.Models
 {
-    class Program
+    class Test
     {
-        static void Main(string[] args)
-        {
-        }
     }
 }

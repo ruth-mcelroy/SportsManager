@@ -34,7 +34,7 @@ namespace SportsTeamManager.Controllers
             Context availabilityDb = new Context();
             
                 var isAvailable = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
-                                                                .Select (a=> (new ClientAvailability{ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available }));
+                                                                .Select (a=> (new ClientAvailability{ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available })); //Not serialising if just sending availability
                 return isAvailable;
         }
 
