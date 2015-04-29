@@ -35,7 +35,12 @@ namespace SportsTeamManager.Models
             db.SaveChanges();
         }
 
+        public DateTime ChangeTime(DateTime t)
+        {
+            DateTime time = new DateTime(this.Time.Year,this.Time.Month, this.Time.Day, t.Hour, t.Minute, t.Second );
 
+            return Time;
+        }
 
     }
 

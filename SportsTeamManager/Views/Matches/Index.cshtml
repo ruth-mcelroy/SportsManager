@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<SportsTeamManager.Models.Match>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Matches";
 }
 <h2>Index</h2>
 <p>
@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Time.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Time.TimeOfDay)
+            @Html.DisplayNameFor(model => model.Time)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Competition)
@@ -29,10 +29,10 @@
                 @Html.DisplayFor(modelItem => item.Opposition)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Time.Date)
+               @Html.DisplayFor(modelItem => item.Time)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Time.TimeOfDay)
+                @item.Time.ToString("HH:mm")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Competition)
