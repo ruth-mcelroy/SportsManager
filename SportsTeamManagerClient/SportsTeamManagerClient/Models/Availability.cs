@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SportsTeamManager.Models
+namespace SportsTeamManagerClient.Models
 {
-    public class ClientAvailability
+    public class Availability
     {
+
 
         public int ID { get; set; }
         public string Name { get; set; }

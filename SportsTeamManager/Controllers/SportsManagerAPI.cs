@@ -34,19 +34,19 @@ namespace SportsTeamManager.Controllers
             Context availabilityDb = new Context();
             
                 var isAvailable = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
-                                                                .Select (a=> (new ClientAvailability{ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available }));
+                                                                .Select (a=> (new ClientAvailability{ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available })); //Not serialising if just sending availability
                 return isAvailable;
         }
 
         //Get:  /api/availability/{id}/yyyy-mm-dd Gets the availabilities for the player assosiated with the id on this date
         [HttpGet]
         [Route("availability/{id}/{date:DateTime}")]                                                                                     //Further work can do a between date A and Date B 
-        public ClientAvailability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)
+        public ClientAvailability GetAvailabilityThisPlayerMatchDate(int id, DateTime date)                                              //Haven't implemented this in the client yet
         {
             using (Context availabilityDb = new Context())
             {
                 var isAvailableDate = availabilityDb.Availabilities.Where(a => a.PlayerID == id)
-                                                                    .Select(a => new ClientAvailability { ID = a.AvailabilityID, Name = a.Player.Name, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available })
+                                                                    .Select(a => new ClientAvailability { ID = a.AvailabilityID, Name = a.Player.Name,MatchId = a.Match.MatchID, Opposition = a.Match.Opposition, Time = a.Match.Time, Available = a.Available })
                                                                     .FirstOrDefault(a => a.Time == date);
                                                                     
 
