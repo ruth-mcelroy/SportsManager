@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<SportsTeamManager.Models.Match>
-
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Index</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -15,31 +12,35 @@
             @Html.DisplayNameFor(model => model.Opposition)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+            @Html.DisplayNameFor(model => model.Time.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time.TimeOfDay)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Competition)
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Opposition)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Competition)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MatchID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MatchID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MatchID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opposition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time.TimeOfDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Competition)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MatchID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MatchID })
+            </td>
+        </tr>
+    }
 </table>
