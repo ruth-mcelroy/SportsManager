@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace SportsTeamManager.Models
 {
@@ -15,7 +16,10 @@ namespace SportsTeamManager.Models
         public string Opposition { get; set; }                   //Could be changed into list of possible teams. 
 
         [Required] 
-        public DateTime Time { get; set; }                      //Split this into date and time on view and edit
+        public DateTime TimeAndDate { get; set; }                      //Split this into date and time on view and edit
+
+        public string DateStr { get; set; }  //Format 01 Jan 2000
+        public string Time { get; set; }    //Format 00:00
         public Competition Competition { get; set; }
 
 
@@ -35,11 +39,13 @@ namespace SportsTeamManager.Models
             db.SaveChanges();
         }
 
-        public DateTime ChangeTime(DateTime t)
+        public void UpdateTime()
         {
-            DateTime time = new DateTime(this.Time.Year,this.Time.Month, this.Time.Day, t.Hour, t.Minute, t.Second );
-
-            return Time;
+            
+            DateTime time = new DateTime();
+            time = DateTime.ParseExact(this.DateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            this.TimeAndDate = time;
+           
         }
 
     }

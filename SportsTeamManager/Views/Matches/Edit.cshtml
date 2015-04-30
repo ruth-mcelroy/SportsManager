@@ -21,10 +21,20 @@
             </div>
         </div>
         <div class="form-group">
-            <strong> <span class="control-label col-md-2">Date and Time</span></strong> 
+            <strong> <span class="control-label col-md-2">Date</span></strong> 
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })<span>01 Jan 2000</span>
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                <span>dd/MM/yyyy</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <strong> <span class="control-label col-md-2">Time</span></strong>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })<span>00:00</span>
                 @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+                <span>hh:mm</span>
             </div>
         </div>
     

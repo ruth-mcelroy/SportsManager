@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap-datetimepicker")
     @Scripts.Render("~/bundles/modernizr")
 
     <meta name="description" content="Web application for managers to add players and matches and change availability for these matches. Can be accessed through an api to change availability." />
@@ -40,9 +41,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/bootstrap-datetimepicker")
     @RenderSection("scripts", required: false)
 </body>
-<link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css" /> 
-<script src="jquery.js"></script>
-<script src="jquery.datetimepicker.js"></script>
+
 </html>

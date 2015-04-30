@@ -12,7 +12,7 @@
             @Html.DisplayNameFor(model => model.Opposition)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Time.Date)
+            @Html.DisplayNameFor(model => model.DateStr)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Time)
@@ -29,10 +29,10 @@
                 @Html.DisplayFor(modelItem => item.Opposition)
             </td>
             <td>
-               @Html.DisplayFor(modelItem => item.Time)
+               @item.TimeAndDate.ToString("dd MMM yyyy")
             </td>
             <td>
-                @item.Time.ToString("HH:mm")
+                @item.TimeAndDate.ToString("HH:mm")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Competition)
