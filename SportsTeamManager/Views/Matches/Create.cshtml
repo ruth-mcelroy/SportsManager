@@ -20,19 +20,13 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Time.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <strong> <span class="control-label col-md-2">Date and Time</span></strong>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Time.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Time.Date, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } }) <span> dd/MM/yyyy hh:mm</span>
+                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Time.TimeOfDay, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Time.TimeOfDay, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Time.TimeOfDay, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Competition, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
