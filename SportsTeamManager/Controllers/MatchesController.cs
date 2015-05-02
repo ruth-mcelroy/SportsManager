@@ -20,7 +20,18 @@ namespace SportsTeamManager.Controllers
         // GET: Matches
         public ActionResult Index()
         {
-            return View(db.Matches.ToList());
+
+            return View(db.Matches.ToList()
+                                    .Where(match => match.TimeAndDate >= DateTime.Now)
+                                    .OrderBy(match => match.TimeAndDate));    //Only shows current matches
+        }
+
+                // GET: Matches
+        public ActionResult PastMatches()
+        {
+            return View(db.Matches.ToList()
+                                    .Where(match => match.TimeAndDate < DateTime.Now)
+                                    .OrderBy(match => match.TimeAndDate));     //Different page for past matches
         }
 
 

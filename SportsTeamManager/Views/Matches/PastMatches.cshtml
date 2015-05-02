@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<SportsTeamManager.Models.Match>
 @{
-    ViewBag.Title = "Matches";
+    ViewBag.Title = "PastMatches";
 }
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Past Matches</h2>
 <table class="table">
     <tr>
         <th>
@@ -29,7 +26,7 @@
                 @Html.DisplayFor(modelItem => item.Opposition)
             </td>
             <td>
-               @item.TimeAndDate.ToString("dd MMM yyyy")
+                @item.TimeAndDate.ToString("dd MMM yyyy")
             </td>
             <td>
                 @item.TimeAndDate.ToString("HH:mm")
@@ -39,11 +36,9 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.MatchID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MatchID })|
-                @Html.ActionLink("Availablity", "Index", "Availabilities", new { searchString = item.Opposition }, null)
-                
+                @Html.ActionLink("Delete", "Delete", new { id = item.MatchID })
             </td>
         </tr>
     }
 </table>
-<div>@Html.ActionLink("Past Matches", "PastMatches")</div>
+<div>@Html.ActionLink("Back to Matches", "Index")</div>

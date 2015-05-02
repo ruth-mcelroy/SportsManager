@@ -15,9 +15,17 @@ namespace SportsTeamManager.Controllers
         private Context db = new Context();
 
         // GET: Availabilities
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             var availabilities = db.Availabilities.Include(a => a.Match).Include(a => a.Player);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                availabilities = availabilities.Where(a => a.Player.Name.Contains(searchString)
+                                                        || a.Match.Opposition.Contains(searchString)
+                                                        || a.Match.Date.Contains(searchString));
+            }
+            
             return View(availabilities.ToList());
         }
 

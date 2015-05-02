@@ -17,23 +17,12 @@ namespace SportsTeamManager.Controllers
         // GET: Players
         public ActionResult Index()
         {
-            return View(db.Players.ToList());
+            return View(db.Players.ToList()
+                        .OrderBy(player => player.Position)
+                        .OrderBy(player => player.Name));
         }
 
-        // GET: Players/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Player player = db.Players.Find(id);
-            if (player == null)
-            {
-                return HttpNotFound();
-            }
-            return View(player);
-        }
+
 
         // GET: Players/Create
         public ActionResult Create()
