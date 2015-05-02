@@ -21,47 +21,10 @@ namespace SportsTeamManager.Controllers
             return View(availabilities.ToList());
         }
 
-        // GET: Availabilities/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Availability availability = db.Availabilities.Find(id);
-            if (availability == null)
-            {
-                return HttpNotFound();
-            }
-            return View(availability);
-        }
 
-        // GET: Availabilities/Create
-        public ActionResult Create()
-        {
-            ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition");
-            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber");
-            return View();
-        }
 
-        // POST: Availabilities/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AvailabilityID,PlayerID,MatchID,Available")] Availability availability)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Availabilities.Add(availability);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition", availability.MatchID);
-            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber", availability.PlayerID);
-            return View(availability);
-        }
+
 
         // GET: Availabilities/Edit/5
         public ActionResult Edit(int? id)
@@ -98,31 +61,9 @@ namespace SportsTeamManager.Controllers
             return View(availability);
         }
 
-        // GET: Availabilities/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Availability availability = db.Availabilities.Find(id);
-            if (availability == null)
-            {
-                return HttpNotFound();
-            }
-            return View(availability);
-        }
 
-        // POST: Availabilities/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Availability availability = db.Availabilities.Find(id);
-            db.Availabilities.Remove(availability);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+
+
 
         protected override void Dispose(bool disposing)
         {
