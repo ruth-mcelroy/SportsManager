@@ -25,7 +25,7 @@ namespace SportsTeamManager.Models
         
 
 
-        public void CreateAvailable()                           //Creates availability objects for each player on the match object it calls.
+        public void CreateAvailableNewMatch()                           //Creates availability objects for each player on the match object it calls.
         {
             Context db = new Context();
             IEnumerable<Player> players = db.Players;

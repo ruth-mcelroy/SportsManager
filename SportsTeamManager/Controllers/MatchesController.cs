@@ -46,7 +46,7 @@ namespace SportsTeamManager.Controllers
                 
                 db.SaveChanges();
 
-                match.CreateAvailable();                //Creates availability objects assosiated with this match and every player.
+                match.CreateAvailableNewMatch();                //Creates availability objects assosiated with this match and every player.
                 return RedirectToAction("Index");
             }
 

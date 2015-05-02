@@ -20,6 +20,21 @@ namespace SportsTeamManager.Models
         [Required] 
         public string Name { get; set; }
         public Position Position { get; set; }
+
+        public void CreateAvailableNewPlayer()                           //Creates availability objects for each player on the match object it calls.
+        {
+            Context db = new Context();
+            IEnumerable<Match> matches = db.Matches;
+
+            foreach (Match m in matches)
+            {
+
+                Availability a = new Availability(this.PlayerID, m.MatchID);
+                db.Availabilities.Add(a);
+            }
+
+            db.SaveChanges();
+        }
     }
 
 }

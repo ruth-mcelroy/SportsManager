@@ -10,113 +10,119 @@ using SportsTeamManager.Models;
 
 namespace SportsTeamManager.Controllers
 {
-    public class PlayersController : Controller
+    public class AvailabilitiesController : Controller
     {
         private Context db = new Context();
 
-        // GET: Players
+        // GET: Availabilities
         public ActionResult Index()
         {
-            return View(db.Players.ToList());
+            var availabilities = db.Availabilities.Include(a => a.Match).Include(a => a.Player);
+            return View(availabilities.ToList());
         }
 
-        // GET: Players/Details/5
+        // GET: Availabilities/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Player player = db.Players.Find(id);
-            if (player == null)
+            Availability availability = db.Availabilities.Find(id);
+            if (availability == null)
             {
                 return HttpNotFound();
             }
-            return View(player);
+            return View(availability);
         }
 
-        // GET: Players/Create
+        // GET: Availabilities/Create
         public ActionResult Create()
         {
+            ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition");
+            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber");
             return View();
         }
 
-        // POST: Players/Create
+        // POST: Availabilities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PlayerID,IRFUNumber,Name,Position")] Player player)
+        public ActionResult Create([Bind(Include = "AvailabilityID,PlayerID,MatchID,Available")] Availability availability)
         {
             if (ModelState.IsValid)
             {
-                db.Players.Add(player);
-                
+                db.Availabilities.Add(availability);
                 db.SaveChanges();
-                player.CreateAvailableNewPlayer();
                 return RedirectToAction("Index");
             }
 
-            return View(player);
+            ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition", availability.MatchID);
+            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber", availability.PlayerID);
+            return View(availability);
         }
 
-        // GET: Players/Edit/5
+        // GET: Availabilities/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Player player = db.Players.Find(id);
-            if (player == null)
+            Availability availability = db.Availabilities.Find(id);
+            if (availability == null)
             {
                 return HttpNotFound();
             }
-            return View(player);
+            ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition", availability.MatchID);
+            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber", availability.PlayerID);
+            return View(availability);
         }
 
-        // POST: Players/Edit/5
+        // POST: Availabilities/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PlayerID,IRFUNumber,Name,Position")] Player player)
+        public ActionResult Edit([Bind(Include = "AvailabilityID,PlayerID,MatchID,Available")] Availability availability)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(player).State = EntityState.Modified;
+                db.Entry(availability).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(player);
+            ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition", availability.MatchID);
+            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber", availability.PlayerID);
+            return View(availability);
         }
 
-        // GET: Players/Delete/5
+        // GET: Availabilities/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Player player = db.Players.Find(id);
-            if (player == null)
+            Availability availability = db.Availabilities.Find(id);
+            if (availability == null)
             {
                 return HttpNotFound();
             }
-            return View(player);
+            return View(availability);
         }
 
-        // POST: Players/Delete/5
+        // POST: Availabilities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Player player = db.Players.Find(id);
-            db.Players.Remove(player);
+            Availability availability = db.Availabilities.Find(id);
+            db.Availabilities.Remove(availability);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
 
         protected override void Dispose(bool disposing)
         {
