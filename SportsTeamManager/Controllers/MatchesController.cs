@@ -23,20 +23,7 @@ namespace SportsTeamManager.Controllers
             return View(db.Matches.ToList());
         }
 
-        // GET: Matches/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Match match = db.Matches.Find(id);
-            if (match == null)
-            {
-                return HttpNotFound();
-            }
-            return View(match);
-        }
+
 
         // GET: Matches/Create
         public ActionResult Create()
@@ -49,7 +36,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MatchID,Opposition,Time,Competition")] Match match)
+        public ActionResult Create([Bind(Include = "MatchID,Opposition,Time,Date,TimeAndDate,Competition")] Match match)
         {
             
             if (ModelState.IsValid)
@@ -86,7 +73,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MatchID,Opposition,Time,Competition")] Match match)
+        public ActionResult Edit([Bind(Include = "MatchID,Opposition,Time,Date,TimeAndDate,Competition")] Match match)
         {
             if (ModelState.IsValid)
             {

@@ -18,10 +18,11 @@ namespace SportsTeamManager.Models
         [Required] 
         public DateTime TimeAndDate { get; set; }                      //Split this into date and time on view and edit
 
-        public string DateStr { get; set; }  //Format 01 Jan 2000
+        public string Date { get; set; }  //Format 01 Jan 2000
         public string Time { get; set; }    //Format 00:00
         public Competition Competition { get; set; }
 
+        
 
 
         public void CreateAvailable()                           //Creates availability objects for each player on the match object it calls.
@@ -43,7 +44,8 @@ namespace SportsTeamManager.Models
         {
             
             DateTime time = new DateTime();
-            time = DateTime.ParseExact(this.DateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            string newTimeString = this.Date + " " + this.Time;
+            time = DateTime.ParseExact(newTimeString, "dd MMM yyyy HH:mm", CultureInfo.InvariantCulture);
             this.TimeAndDate = time;
            
         }
