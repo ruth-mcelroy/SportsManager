@@ -23,7 +23,10 @@ namespace SportsTeamManager.Controllers
             {
                 availabilities = availabilities.Where(a => a.Player.Name.Contains(searchString)
                                                         || a.Match.Opposition.Contains(searchString)
-                                                        || a.Match.Date.Contains(searchString));
+                                                        || a.Match.Date.Contains(searchString))
+                                                .OrderBy(a => a.Match.TimeAndDate)
+                                                .OrderBy(a => a.Player.Position)
+                                                .OrderBy(a => a.Player.Name);
             }
             
             return View(availabilities.ToList());

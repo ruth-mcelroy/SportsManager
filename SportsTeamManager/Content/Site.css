@@ -22,3 +22,24 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.HomeImage{
+ width: 99%;
+	height: auto;
+
+
+}
+
+.HomeImageDiv{
+    padding-top: 2em;
+    width: 30%;
+	height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+.HomeHeading{
+   width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
