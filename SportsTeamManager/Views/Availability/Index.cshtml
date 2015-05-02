@@ -32,16 +32,12 @@
             @Html.DisplayFor(modelItem => item.Player.Name)
         </td>
         <td>
-            @Html.EditorFor(modelItem => item.Available, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => item.Available, "", new { @class = "text-danger" })
+            @Html.DisplayFor(modelItem => item.Available)
         </td>
-
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AvailabilityID }) |
+        </td>
     </tr>
 }
 
 </table>
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Save" class="btn btn-default" />
-    </div>
-</div>

@@ -16,15 +16,44 @@ namespace SportsTeamManager.Controllers
             return View(db.Availabilities.ToList());     //Does this show player and match id? Show player and match names and date instead.
         }
 
+        // GET: Availabilities/Details/5
+        public ActionResult Details(int? AvailabilityID)
+        {
+            if (AvailabilityID == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Availability availability = db.Availabilities.Find(AvailabilityID);
+            if (availability == null)
+            {
+                return HttpNotFound();
+            }
+            return View(availability);
+        }
 
 
 
-        // POST: Availabilities/index/5
+        // GET: Availabilities/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Availability availability = db.Availabilities.Find(id);
+            if (availability == null)
+            {
+                return HttpNotFound();
+            }
+            return View(availability);
+        }
+
+        // POST: Availabilities/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "Available")] Availability availability)
+        public ActionResult Edit([Bind(Include = "Player.Name,Match.Opposition,Available")] Availability availability)
         {
             if (ModelState.IsValid)
             {

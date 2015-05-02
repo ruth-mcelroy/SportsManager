@@ -55,6 +55,8 @@ namespace SportsTeamManager.Controllers
             if (ModelState.IsValid)
             {
                 db.Matches.Add(match);
+                match.UpdateTime();
+                
                 db.SaveChanges();
 
                 match.CreateAvailable();                //Creates availability objects assosiated with this match and every player.
@@ -88,6 +90,7 @@ namespace SportsTeamManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                match.UpdateTime();
                 db.Entry(match).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
