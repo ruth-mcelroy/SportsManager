@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SportsTeamManager.Models.Player>
+﻿ @model IEnumerable<SportsTeamManager.Models.Player>
 
 @{
     ViewBag.Title = "Index";
@@ -36,7 +36,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayerID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PlayerID })|
+            @Html.ActionLink("Delete", "Delete", new { id=item.PlayerID }) |
             @Html.ActionLink("Availablity", "Index", "Availabilities", new { searchString = item.Name }, null)
         </td>
     </tr>
