@@ -14,15 +14,20 @@ namespace SportsTeamManager.Models
     {
         [Key]
         public int PlayerID { get; set; }
-
         
         [Required] 
         [DisplayName ("IRFU Number")]
+
+        [RegularExpression(@"[0-9]{8}", ErrorMessage = "That is not a valid IRFU Number")]     //IRFU number is exactly 8 digits
         public string IRFUNumber { get; set; }      //Rugby registration number unique and known by each player
 
         [Required] 
+        [MaxLength (50)]
         public string Name { get; set; }
+
         public Position Position { get; set; }
+
+
 
         public void CreateAvailableNewPlayer()                           //Creates availability objects for each player on the match object it calls.
         {
