@@ -23,6 +23,8 @@ textarea {
     max-width: 280px;
 }
 
+/*My adjustments to layout*/
+
 .HomeImage{
  width: 99%;
 	height: auto;
@@ -42,4 +44,8 @@ textarea {
     margin-left: auto;
     margin-right: auto;
 }
+.navbar-brand{
+    font-size: 2em;
+}
+
 

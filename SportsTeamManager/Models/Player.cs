@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace SportsTeamManager.Models
         public int PlayerID { get; set; }
 
         [Required] 
+        [DisplayName ("IRFU Number")]
         public string IRFUNumber { get; set; }      //Rugby registration number unique and known by each player
 
         [Required] 
