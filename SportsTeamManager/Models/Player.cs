@@ -15,6 +15,7 @@ namespace SportsTeamManager.Models
         [Key]
         public int PlayerID { get; set; }
 
+        
         [Required] 
         [DisplayName ("IRFU Number")]
         public string IRFUNumber { get; set; }      //Rugby registration number unique and known by each player
