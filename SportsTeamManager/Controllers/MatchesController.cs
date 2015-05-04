@@ -51,8 +51,6 @@ namespace SportsTeamManager.Controllers
         }
 
         // POST: Matches/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MatchID,Opposition,Location,Time,Date,TimeAndDate,Competition")] Match match)
@@ -88,8 +86,6 @@ namespace SportsTeamManager.Controllers
         }
 
         // POST: Matches/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MatchID,Opposition,Location,Time,Date,TimeAndDate,Competition")] Match match)

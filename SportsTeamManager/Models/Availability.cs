@@ -37,7 +37,6 @@ namespace SportsTeamManager.Models
         {
         }
 
-
     }
 
 }

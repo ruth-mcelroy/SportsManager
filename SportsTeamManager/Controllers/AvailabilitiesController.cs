@@ -17,34 +17,31 @@ namespace SportsTeamManager.Controllers
         // GET: Availabilities
         public ActionResult Index(string searchString)
         {
-            var availabilities = db.Availabilities.Include(a => a.Match).Include(a => a.Player);
+            IEnumerable<Availability> availabilities = db.Availabilities.Include(a => a.Match).Include(a => a.Player);
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 availabilities = availabilities.Where(a => a.Player.Name.Contains(searchString)
                                                         || a.Match.Opposition.Contains(searchString)
                                                         || a.Match.Date.Contains(searchString));
-            }
 
-            if (availabilities.Distinct(a => a.Match.MatchID).Count() == 1)                        //If one match is displayed then this tells you how many players are available for that match. 
-            {                                               //Later functionality will have a button to show how many players in each position
-                Match m = availabilities.Match.FirstOrDefault();
-                int playerAmount = m.CountPlayers();
+                int amountMatches = availabilities.GroupBy(m => m.MatchID)
+                                                    .Count();
 
-                ViewBag.MessageCount = "There are " + playerAmount + " players available for this match.";
-            }
+                if (amountMatches == 1)
+                {
+                    int playerCount = availabilities.Where(a => a.Available == true)
+                                                    .Count();
+                    ViewBag.MessageCount = "There are " + playerCount + " players available for this match.";
+                }               
+            }   
 
-
-            return View(availabilities.OrderBy(a => a.Match.TimeAndDate)
-                                                .ThenBy(a => a.Player.Position)
-                                                .ThenBy(a => a.Player.Name)
-                                                .ToList());
+            return View(availabilities.Where(a => a.Match.TimeAndDate > DateTime.Now)
+                                       .OrderBy(a => a.Match.TimeAndDate)
+                                       .ThenBy(a => a.Player.Position)
+                                       .ThenBy(a => a.Player.Name)
+                                       .ToList());
         }
-
-
-
-
-
 
         // GET: Availabilities/Edit/5
         public ActionResult Edit(int? id)
@@ -60,25 +57,34 @@ namespace SportsTeamManager.Controllers
             }
             ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition", availability.MatchID);
             ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber", availability.PlayerID);
+
+            
+
             return View(availability);
         }
 
         // POST: Availabilities/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AvailabilityID,PlayerID,MatchID,Available")] Availability availability)
         {
+            string search = null;
             if (ModelState.IsValid)
             {
                 db.Entry(availability).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                    search = db.Matches.Where(m => m.MatchID == availability.MatchID)
+                                                .Select(m => m.Date)
+                                                .FirstOrDefault();                   //search = the match date of the availability object                                     
             }
-            ViewBag.MatchID = new SelectList(db.Matches, "MatchID", "Opposition", availability.MatchID);
-            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "IRFUNumber", availability.PlayerID);
-            return View(availability);
+
+            if (search != null)
+            {
+                return RedirectToAction("Index", new { searchstring = search });    // returns to all availabilities matching the match date
+            } 
+            return View(availability);           
         }
 
 

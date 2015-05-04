@@ -60,33 +60,6 @@ namespace SportsTeamManager.Models
                 this.TimeAndDate = time;   
         }
 
-
-
-        public int CountPlayers(Position p)         //Method to find count of available players for a match and position
-        {
-            Context db = new Context();
-            int playerCount = 0;
-            if (p == Position.None)
-            {   
-                playerCount = db.Availabilities.Where(a => a.Match.MatchID == this.MatchID)
-                                               .Where(a =>a.Available == true )
-                                               .Count();
-            }
-            else
-            {
-                playerCount = db.Availabilities.Where(a => a.Match.MatchID == this.MatchID)
-                                                .Where(a =>a.Player.Position == p )
-                                               .Where(a =>a.Available == true )
-                                               .Count();
-            }
-
-            return playerCount;
-        }
-
-
-       public int CountPlayers()                    //Overloaded method if want count of players regardless of position
-        { return CountPlayers(Position.None); }
-
     }
 
 }
