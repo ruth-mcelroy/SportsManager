@@ -15,11 +15,20 @@ namespace SportsTeamManager.Controllers
         private Context db = new Context();
 
         // GET: Players
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Players.ToList()
-                        .OrderBy(player => player.Position)
-                        .OrderBy(player => player.Name));
+            IEnumerable<Player> players = db.Players;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                players = players.Where(a => a.Name.Contains(searchString)
+                                                ||a.Position.ToString().Contains(searchString)); //Searches positions to search enum need to parse it to a string and compare.
+            }
+
+            
+            return View(players.ToList()
+                        .OrderBy(player => player.Position)     
+                        .ThenBy(player => player.Name));    
         }
 
 

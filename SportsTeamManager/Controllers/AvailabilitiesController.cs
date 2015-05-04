@@ -23,13 +23,22 @@ namespace SportsTeamManager.Controllers
             {
                 availabilities = availabilities.Where(a => a.Player.Name.Contains(searchString)
                                                         || a.Match.Opposition.Contains(searchString)
-                                                        || a.Match.Date.Contains(searchString))
-                                                .OrderBy(a => a.Match.TimeAndDate)
-                                                .OrderBy(a => a.Player.Position)
-                                                .OrderBy(a => a.Player.Name);
+                                                        || a.Match.Date.Contains(searchString));
             }
-            
-            return View(availabilities.ToList());
+
+            if (availabilities.Distinct(a => a.Match.MatchID).Count() == 1)                        //If one match is displayed then this tells you how many players are available for that match. 
+            {                                               //Later functionality will have a button to show how many players in each position
+                Match m = availabilities.Match.FirstOrDefault();
+                int playerAmount = m.CountPlayers();
+
+                ViewBag.MessageCount = "There are " + playerAmount + " players available for this match.";
+            }
+
+
+            return View(availabilities.OrderBy(a => a.Match.TimeAndDate)
+                                                .ThenBy(a => a.Player.Position)
+                                                .ThenBy(a => a.Player.Name)
+                                                .ToList());
         }
 
 

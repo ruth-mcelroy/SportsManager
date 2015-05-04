@@ -9,9 +9,11 @@
 {
     <p>
         @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search Available" />
     </p>
 }
+
+@ViewBag.MessageCount
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -22,7 +24,13 @@
             @Html.DisplayNameFor(model => model.Player.Name)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Player.Position)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Match.Opposition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Match.Location)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Match.Date)
@@ -42,7 +50,13 @@
             @Html.DisplayFor(modelItem => item.Player.Name)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Player.Position)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Match.Opposition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Match.Location)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Match.Date)

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 
 namespace SportsTeamManager.Models
 {
-    public enum Competition { AIL1League,AIL2League, AICup, AIBowl, AIPlate, LeinsterCup}
+    public enum Competition { [Display(Name = "AIL League")] AIL1League,[Display(Name = "AIL Cup")] AILCup,[Display(Name = "AIL Bowl")] AIBowl, [Display(Name = "Leinster Cup")] LeinsterCup }
+
     public class Match
     {
         
@@ -15,6 +17,9 @@ namespace SportsTeamManager.Models
         [Required]
         [MaxLength(50)]
         public string Opposition { get; set; }                  //Could be changed into list of possible teams. 
+
+        [MaxLength(50)]
+        public string Location { get; set; }
 
         [Required] 
         public DateTime TimeAndDate { get; set; }                     
@@ -52,10 +57,35 @@ namespace SportsTeamManager.Models
 
                 time = DateTime.ParseExact(newTimeString, "dd MMM yyyy HH:mm", CultureInfo.InvariantCulture);
 
-                this.TimeAndDate = time;
-
-           
+                this.TimeAndDate = time;   
         }
+
+
+
+        public int CountPlayers(Position p)         //Method to find count of available players for a match and position
+        {
+            Context db = new Context();
+            int playerCount = 0;
+            if (p == Position.None)
+            {   
+                playerCount = db.Availabilities.Where(a => a.Match.MatchID == this.MatchID)
+                                               .Where(a =>a.Available == true )
+                                               .Count();
+            }
+            else
+            {
+                playerCount = db.Availabilities.Where(a => a.Match.MatchID == this.MatchID)
+                                                .Where(a =>a.Player.Position == p )
+                                               .Where(a =>a.Available == true )
+                                               .Count();
+            }
+
+            return playerCount;
+        }
+
+
+       public int CountPlayers()                    //Overloaded method if want count of players regardless of position
+        { return CountPlayers(Position.None); }
 
     }
 

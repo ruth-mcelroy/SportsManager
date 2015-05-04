@@ -9,7 +9,7 @@ using System.Web;
 
 namespace SportsTeamManager.Models
 {
-    public enum Position { Prop, Hooker, SecondRow, Flanker, No8, ScrumHalf, OutHalf, Centre, Wing, Fullback }
+    public enum Position { Prop, Hooker, [Display(Name = "Second Row")] SecondRow, Flanker, [Display(Name = "Number 8")] No8, [Display(Name = "Scrum Half")] ScrumHalf, [Display(Name = "Out Half")] OutHalf, Centre, Wing, Fullback, None }      //Only some of the display names need to be cahnged
     public class Player
     {
         [Key]
@@ -43,6 +43,8 @@ namespace SportsTeamManager.Models
 
             db.SaveChanges();
         }
+
+
     }
 
 }

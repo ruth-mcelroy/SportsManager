@@ -18,12 +18,20 @@ namespace SportsTeamManager.Controllers
         
 
         // GET: Matches
-        public ActionResult Index()
+        public ActionResult Index(string searchString)      //Can search for opposition or date or part thereof
         {
+            IEnumerable<Match> matches = db.Matches;
 
-            return View(db.Matches.ToList()
-                                    .Where(match => match.TimeAndDate >= DateTime.Now)
-                                    .OrderBy(match => match.TimeAndDate));    //Only shows current matches
+            if (!String.IsNullOrEmpty(searchString))
+            {
+               matches = matches.Where(a => a.Opposition.Contains(searchString)                                                        
+                                               || a.Date.Contains(searchString));
+
+            }
+
+            return View(matches.ToList()
+                                    .Where(match => match.TimeAndDate >= DateTime.Now)  //Only shows current matches
+                                    .OrderBy(match => match.TimeAndDate));    
         }
 
                 // GET: Matches
@@ -47,7 +55,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MatchID,Opposition,Time,Date,TimeAndDate,Competition")] Match match)
+        public ActionResult Create([Bind(Include = "MatchID,Opposition,Location,Time,Date,TimeAndDate,Competition")] Match match)
         {
             
             if (ModelState.IsValid)
@@ -84,7 +92,7 @@ namespace SportsTeamManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MatchID,Opposition,Time,Date,TimeAndDate,Competition")] Match match)
+        public ActionResult Edit([Bind(Include = "MatchID,Opposition,Location,Time,Date,TimeAndDate,Competition")] Match match)
         {
             if (ModelState.IsValid)
             {

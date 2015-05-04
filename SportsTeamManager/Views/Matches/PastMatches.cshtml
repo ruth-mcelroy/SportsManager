@@ -3,10 +3,22 @@
     ViewBag.Title = "PastMatches";
 }
 <h2>Past Matches</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.TextBox("SearchString")
+        <input type="submit" value="Search Matches" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Opposition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date)
@@ -26,6 +38,9 @@
                 @Html.DisplayFor(modelItem => item.Opposition)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
                 @item.TimeAndDate.ToString("dd MMM yyyy")
             </td>
             <td>
@@ -36,7 +51,8 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.MatchID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MatchID })
+                @Html.ActionLink("Delete", "Delete", new { id = item.MatchID }) |
+                @Html.ActionLink("Who Played", "Index", "Availabilities", new { searchString = item.Date }, null)
             </td>
         </tr>
     }
