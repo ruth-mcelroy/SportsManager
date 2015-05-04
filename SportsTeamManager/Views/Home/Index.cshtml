@@ -12,7 +12,7 @@
             <h2 class ="HomeHeading">@Html.ActionLink("Players", "Index", "Players")</h2>
         <div class="HomeImageDiv">
             <a href='@Url.Action("Index","Players",null)'>
-                <img src=@Url.Content("~/images/TeamPhoto.jpg") class="HomeImage" />
+                <img src=@Url.Content("~/Content/Images/TeamPhoto.jpg") class="HomeImage" />
             </a>
         </div>
         
@@ -22,7 +22,7 @@
         <h2 class="HomeHeading">@Html.ActionLink("Matches", "Index", "Matches")</h2>
         <div class="HomeImageDiv">
             <a href='@Url.Action("Index","Matches",null)'>
-                <img src=@Url.Content("~/images/Rugbyball.png") class="HomeImage" />
+                <img src='@Url.Content("~/Content/Images/Rugbyball.png")' class="HomeImage" />
             </a>
     </div>
     </div>
@@ -30,7 +30,7 @@
         <h2 class="HomeHeading">@Html.ActionLink("Availability", "Index", "Availabilities")</h2>
         <div class="HomeImageDiv">
             <a href='@Url.Action("Index", "Availabilities", null)'>
-                <img src=@Url.Content("~/images/tick.png") class="HomeImage" />
+                <img src='@Url.Content("~/Content/Images/tick.png")' class="HomeImage" />
              </a>
         </div>
     </div>
