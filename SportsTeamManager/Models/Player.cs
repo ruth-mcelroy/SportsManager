@@ -17,7 +17,6 @@ namespace SportsTeamManager.Models
         
         [Required] 
         [DisplayName ("IRFU Number")]
-
         [RegularExpression(@"[0-9]{8}", ErrorMessage = "That is not a valid IRFU Number")]     //IRFU number is exactly 8 digits
         public string IRFUNumber { get; set; }      //Rugby registration number unique and known by each player
 

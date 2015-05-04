@@ -43,6 +43,23 @@ namespace SportsTeamManager.Controllers
                                        .ToList());
         }
 
+        public ActionResult PastAvailabilities(string searchString)
+        {
+            IEnumerable<Availability> availabilities = db.Availabilities.Include(a => a.Match).Include(a => a.Player);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                availabilities = availabilities.Where(a =>a.Match.Date.Contains(searchString));
+            }
+
+            return View(availabilities.Where(a =>a.Available == true)
+                                       .OrderBy(a => a.Player.Position)
+                                       .ThenBy(a => a.Player.Name)
+                                       .ToList());
+        }
+
+
+
         // GET: Availabilities/Edit/5
         public ActionResult Edit(int? id)
         {

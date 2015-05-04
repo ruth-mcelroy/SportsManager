@@ -52,7 +52,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.MatchID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.MatchID }) |
-                @Html.ActionLink("Who Played", "Index", "Availabilities", new { searchString = item.Date }, null)
+                @Html.ActionLink("Who Played", "PastAvailabilities", "Availabilities", new { searchString = item.Date }, null)
             </td>
         </tr>
     }

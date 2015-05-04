@@ -392,6 +392,7 @@
     <Content Include="Views\Availabilities\Index.cshtml" />
     <Content Include="Views\Matches\PastMatches.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Availabilities\PastAvailabilities.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
