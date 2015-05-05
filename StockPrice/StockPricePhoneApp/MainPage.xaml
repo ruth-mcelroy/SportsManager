@@ -1,0 +1,36 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="StockPricePhoneApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent" RenderTransformOrigin="0.5,0.526">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--asda-->
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28"/>
+        <Grid x:Name="ContentGrid" ScrollViewer.VerticalScrollBarVisibility="Visible" RenderTransformOrigin="0.523,0.265" HorizontalAlignment="Right" Width="480" Margin="0,10,0,0" Grid.RowSpan="2">
+            <Grid x:Name="grid1">
+                <Button  x:Name="show" Content="Show Matches" Height="82" HorizontalAlignment="Center" Margin="271,0,0,0" VerticalAlignment="Top" Width="209" Click="GetMatches" />
+                <TextBox x:Name="irfu" InputScope="Number" HorizontalAlignment="Left" Height="82" Margin="10,0,0,0" TextWrapping="Wrap" Text="Enter IRFU Number" VerticalAlignment="Top" Width="275" />
+            </Grid>
+        </Grid>
+        <phone:LongListSelector Name ="listSelect" HorizontalAlignment="Left" Height="639" VerticalAlignment="Top" Width="458" Margin="12,61,0,0" Grid.Row="1"/>
+
+        <!--ContentPanel - place additional content here-->
+    </Grid>
+
+</phone:PhoneApplicationPage>
