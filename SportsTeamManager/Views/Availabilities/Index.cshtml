@@ -1,0 +1,77 @@
+﻿@model IEnumerable<SportsTeamManager.Models.Availability>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Availability</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.TextBox("SearchString")
+        <input type="submit" value="Search Available" />
+    </p>
+}
+
+@ViewBag.MessageCount
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Player.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Player.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Match.Opposition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Match.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Match.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Match.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Available)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player.Position)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Match.Opposition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Match.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Match.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Match.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Available)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AvailabilityID })
+
+        </td>
+    </tr>
+}
+
+</table>

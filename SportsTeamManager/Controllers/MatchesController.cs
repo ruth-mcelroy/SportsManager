@@ -18,25 +18,31 @@ namespace SportsTeamManager.Controllers
         
 
         // GET: Matches
-        public ActionResult Index()
+        public ActionResult Index(string searchString)      //Can search for opposition or date or part thereof
         {
-            return View(db.Matches.ToList());
+            IEnumerable<Match> matches = db.Matches;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+               matches = matches.Where(a => a.Opposition.Contains(searchString)                                                        
+                                               || a.Date.Contains(searchString));
+
+            }
+
+            return View(matches.ToList()
+                                    .Where(match => match.TimeAndDate >= DateTime.Now)  //Only shows current matches
+                                    .OrderBy(match => match.TimeAndDate));    
         }
 
-        // GET: Matches/Details/5
-        public ActionResult Details(int? id)
+                // GET: Matches
+        public ActionResult PastMatches()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Match match = db.Matches.Find(id);
-            if (match == null)
-            {
-                return HttpNotFound();
-            }
-            return View(match);
+            return View(db.Matches.ToList()
+                                    .Where(match => match.TimeAndDate < DateTime.Now)
+                                    .OrderBy(match => match.TimeAndDate));     //Different page for past matches
         }
+
+
 
         // GET: Matches/Create
         public ActionResult Create()
@@ -45,11 +51,9 @@ namespace SportsTeamManager.Controllers
         }
 
         // POST: Matches/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MatchID,Opposition,Time,Competition")] Match match)
+        public ActionResult Create([Bind(Include = "MatchID,Opposition,Location,Time,Date,TimeAndDate,Competition")] Match match)
         {
             
             if (ModelState.IsValid)
@@ -59,7 +63,7 @@ namespace SportsTeamManager.Controllers
                 
                 db.SaveChanges();
 
-                match.CreateAvailable();                //Creates availability objects assosiated with this match and every player.
+                match.CreateAvailableNewMatch();                //Creates availability objects assosiated with this match and every player.
                 return RedirectToAction("Index");
             }
 
@@ -82,11 +86,9 @@ namespace SportsTeamManager.Controllers
         }
 
         // POST: Matches/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MatchID,Opposition,Time,Competition")] Match match)
+        public ActionResult Edit([Bind(Include = "MatchID,Opposition,Location,Time,Date,TimeAndDate,Competition")] Match match)
         {
             if (ModelState.IsValid)
             {

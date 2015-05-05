@@ -1,0 +1,83 @@
+﻿@model SportsTeamManager.Models.Availability
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Availability</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.AvailabilityID)
+        @Html.HiddenFor(model => model.PlayerID)
+        @Html.HiddenFor(model => model.MatchID)
+
+        <dl class="dl-horizontal">
+            <dt>
+                <strong> @Html.DisplayNameFor(model => model.Player.Name)</strong>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Player.Name)
+            </dd>
+            <dt>
+                <strong> @Html.DisplayNameFor(model => model.Match.Opposition)</strong>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Match.Opposition)
+            </dd>
+            <dt>
+                <strong> @Html.DisplayNameFor(model => model.Match.Location)</strong>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Match.Location)
+            </dd>
+            <dt>
+                <strong>@Html.DisplayNameFor(model => model.Match.Date)</strong>
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Match.Date)
+            </dd>
+            <dt>
+                <strong>@Html.DisplayNameFor(model => model.Match.Time)</strong>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Match.Time)
+            </dd>
+        </dl>
+ 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Available)
+                    @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

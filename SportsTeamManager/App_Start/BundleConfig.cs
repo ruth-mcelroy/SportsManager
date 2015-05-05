@@ -25,6 +25,7 @@ namespace SportsTeamManager
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/mPurposeBootStrapTheme.css",
                       "~/Content/site.css"));
         }
     }

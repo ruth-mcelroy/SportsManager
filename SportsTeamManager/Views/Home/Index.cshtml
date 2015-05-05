@@ -7,23 +7,31 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>@Html.ActionLink("Players", "Index","Players" )</h2>
-        <div>
-           
+    <div class="col-md-4" >
+        
+            <h2 class ="HomeHeading">@Html.ActionLink("Players", "Index", "Players")</h2>
+        <div class="HomeImageDiv">
+            <a href='@Url.Action("Index","Players",null)'>
+                <img src=@Url.Content("~/Content/Images/TeamPhoto.jpg") class="HomeImage" />
+            </a>
         </div>
+        
       
     </div>
     <div class="col-md-4">
-        <h2>@Html.ActionLink("Matches", "Index", "Matches")</h2>
-        <div>
-
-        </div>
+        <h2 class="HomeHeading">@Html.ActionLink("Matches", "Index", "Matches")</h2>
+        <div class="HomeImageDiv">
+            <a href='@Url.Action("Index","Matches",null)'>
+                <img src='@Url.Content("~/Content/Images/Rugbyball.png")' class="HomeImage" />
+            </a>
+    </div>
     </div>
     <div class="col-md-4">
-        <h2>@Html.ActionLink("Availability", "Index", "Availability")</h2>
-        <div>
-
+        <h2 class="HomeHeading">@Html.ActionLink("Availability", "Index", "Availabilities")</h2>
+        <div class="HomeImageDiv">
+            <a href='@Url.Action("Index", "Availabilities", null)'>
+                <img src='@Url.Content("~/Content/Images/tick.png")' class="HomeImage" />
+             </a>
         </div>
     </div>
 </div>

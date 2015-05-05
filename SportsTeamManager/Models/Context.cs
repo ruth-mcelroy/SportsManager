@@ -11,7 +11,7 @@ namespace SportsTeamManager.Models
         public Context()
             : base("DefaultConnection")
         {
-            Database.SetInitializer<Context>(new DropCreateDatabaseAlways<Context>());     
+            Database.SetInitializer<Context>(new CreateDatabaseIfNotExists<Context>());     
         }
         public System.Data.Entity.DbSet<SportsTeamManager.Models.Availability> Availabilities { get; set; }
 

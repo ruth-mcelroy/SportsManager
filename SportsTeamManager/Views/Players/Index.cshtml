@@ -1,10 +1,18 @@
-﻿@model IEnumerable<SportsTeamManager.Models.Player>
+﻿ @model IEnumerable<SportsTeamManager.Models.Player>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Players</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.TextBox("SearchString")
+        <input type="submit" value="Search Players" />
+    </p>
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -36,8 +44,8 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayerID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PlayerID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PlayerID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.PlayerID }) |
+            @Html.ActionLink("Availablity", "Index", "Availabilities", new { searchString = item.Name }, null)
         </td>
     </tr>
 }

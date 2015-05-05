@@ -15,25 +15,23 @@ namespace SportsTeamManager.Controllers
         private Context db = new Context();
 
         // GET: Players
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.Players.ToList());
+            IEnumerable<Player> players = db.Players;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                players = players.Where(a => a.Name.Contains(searchString)
+                                                ||a.Position.ToString().Contains(searchString)); //Searches positions to search enum need to parse it to a string and compare.
+            }
+
+            
+            return View(players.ToList()
+                        .OrderBy(player => player.Position)     
+                        .ThenBy(player => player.Name));    
         }
 
-        // GET: Players/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Player player = db.Players.Find(id);
-            if (player == null)
-            {
-                return HttpNotFound();
-            }
-            return View(player);
-        }
+
 
         // GET: Players/Create
         public ActionResult Create()
@@ -42,8 +40,7 @@ namespace SportsTeamManager.Controllers
         }
 
         // POST: Players/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PlayerID,IRFUNumber,Name,Position")] Player player)
@@ -51,7 +48,9 @@ namespace SportsTeamManager.Controllers
             if (ModelState.IsValid)
             {
                 db.Players.Add(player);
+                
                 db.SaveChanges();
+                player.CreateAvailableNewPlayer();
                 return RedirectToAction("Index");
             }
 
@@ -74,8 +73,7 @@ namespace SportsTeamManager.Controllers
         }
 
         // POST: Players/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PlayerID,IRFUNumber,Name,Position")] Player player)
