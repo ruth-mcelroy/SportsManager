@@ -13,6 +13,7 @@ namespace SportsTeamManager.Controllers
     public class SportsManagerController : ApiController
     {
         //Get:  /api/availability/{Irfu}  Gets the availabilities for the player assosiated with the id
+        //eg. http://sportsteammanager.cloudapp.net/api/availability/06071685
         [HttpGet]
         [Route("availability/{Irfu}")]                                                                         //Get id from player id of player found in GetPlayer
         public IEnumerable<ClientAvailability> GetAvailabilityPlayer(string Irfu)
@@ -29,6 +30,7 @@ namespace SportsTeamManager.Controllers
 
 
         //Put:  /api/availability/{AvailabilityID}/{availableParam} Change the availability for this player and the match selected
+        //eg.http://sportsteammanager.cloudapp.net/api/availability/23/true
         [HttpPut]
         [Route("availability/{AvailabilityID}/{availableParam}")]                                         //Put availability because availability object already made,  replacing availability object not creating new one
         public Availability PutAvailability(int AvailabilityID, [FromUri]bool availableParam)

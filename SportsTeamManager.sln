@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsTeamManager", "Sports
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestSportsManager", "UnitTestSportsManager\UnitTestSportsManager.csproj", "{B6BEDF16-838A-453D-8300-76BA3BEFB569}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SportsTeamManager.Azure", "SportsTeamManager.Azure\SportsTeamManager.Azure.ccproj", "{DFB8DA49-BEE4-43D2-908F-02AC18577ABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B6BEDF16-838A-453D-8300-76BA3BEFB569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6BEDF16-838A-453D-8300-76BA3BEFB569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6BEDF16-838A-453D-8300-76BA3BEFB569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFB8DA49-BEE4-43D2-908F-02AC18577ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFB8DA49-BEE4-43D2-908F-02AC18577ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFB8DA49-BEE4-43D2-908F-02AC18577ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFB8DA49-BEE4-43D2-908F-02AC18577ABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
