@@ -14,29 +14,7 @@ namespace SportsTeamManagerClient.Models
     public class ClientTasks
     {
 
-       public static async Task GetPlayer(string irfu)    //player irfu number
-        {
-
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:8540/api/player"); //base part of uri
-
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));   //accepts json
-
-                HttpResponseMessage response = await client.GetAsync(irfu);                   // an async call yoke is one that waits for the other thing to do stuff      
-                if (response.IsSuccessStatusCode)
-                {
-                    var player = await response.Content.ReadAsAsync<Player>();
-                    Console.WriteLine(player.Name);                                             //Writelines so I can see I am getting player
-                }                                                                               //Create new player object here?
-            }
-        }
-
-
-
-
-
-       public static async Task GetAvailabilities(int id)     //player id
+       public static async Task GetAvailabilities(string irfu)    //player irfu number
         {
 
             using (HttpClient client = new HttpClient())
@@ -45,36 +23,39 @@ namespace SportsTeamManagerClient.Models
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));   //accepts json
 
-                HttpResponseMessage response = await client.GetAsync(id.ToString());                   // an async call yoke is one that waits for the other thing to do stuff      
+                HttpResponseMessage response = await client.GetAsync(irfu);                   // an async call yoke is one that waits for the other thing to do stuff      
                 if (response.IsSuccessStatusCode)
                 {
-                    var availabilities = await response.Content.ReadAsAsync<IEnumerable<Availability>>();       //Need to store this as a list somewhere? New class as list?
-
-                    foreach(Availability a in availabilities )
+                    var avail = await response.Content.ReadAsAsync<IEnumerable<Availability>>();
+                    foreach (Availability a in avail)
                     {
-                        Console.WriteLine(a.Opposition);
-                        Console.WriteLine(a.Available);
+                        string answer = "Opposition: " + a.Opposition + " Location: " + a.Location + "  Date: " + a.Date + " Time: " + a.Time;
+                        Console.WriteLine(answer);
                     }
-                }
+                   
+                }                                                                               
             }
         }
 
 
 
 
-        public static async Task PutAvailable(int playerId, int matchId, bool Availability)
+
+       
+
+        public static async Task PutAvailable(int AvilabilityID, bool Availability)
         {
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8540/api/availability/change/"); 
+                client.BaseAddress = new Uri("http://localhost:8540/api/availability"); 
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.PutAsJsonAsync(playerId.ToString() +"/" + matchId.ToString() + "/" + Availability.ToString(), Availability);
+                HttpResponseMessage response = await client.PutAsJsonAsync(Availability.ToString() +"/" + Availability.ToString(), Availability);
                     if (response.IsSuccessStatusCode)
                     {
-                        Console.WriteLine("Message sent ok");
+                        Console.WriteLine(response)
                     }
                     else
                     {
@@ -84,20 +65,6 @@ namespace SportsTeamManagerClient.Models
         }
 
 
-        public class Test                                               //This only works when here and not in seperate class why??
-        {
-            static void Main()
-        {
-            Console.WriteLine("Please enter your Irfu number:");
-            
-            Task t1 = GetPlayer(Console.ReadLine());                //Doen't seem to be get them ok. Do I need JSON other end?
-            t1.Wait();
-            Task t2 = GetAvailabilities(1);                                 
-            t2.Wait();
-            Task t3 = PutAvailable(1, 1, true);                     //Sending message ok
-            t3.Wait();
-        }
-        }
 
     }
 }
