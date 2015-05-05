@@ -41,9 +41,9 @@ namespace SportsTeamManager.Models
 
         public void UpdateTime()
         {
-            
+
             DateTime time = new DateTime();
-            time = DateTime.ParseExact(this.DateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            time = DateTime.Parse(Time);
             this.TimeAndDate = time;
            
         }
