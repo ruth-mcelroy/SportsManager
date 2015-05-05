@@ -10,7 +10,7 @@ namespace SportsTeamManager.Models
     public class ClientAvailability
     {
         [Key]
-        public int ID { get; set; }
+        public int AvailabilityID { get; set; }
 
         [Required]
         [DisplayName("IRFU Number")]
@@ -18,21 +18,20 @@ namespace SportsTeamManager.Models
         public string IRFUNumber { get; set; }
 
         [Required]
-        public int PlayerId { get; set; }
-
-        [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-
-        [Required]
-        public int MatchId { get; set; }
-
-
 
         [MaxLength(50)]
         public string Opposition { get; set; }
 
-        public DateTime Time { get; set; }
+        [MaxLength(50)]
+        public string Location { get; set; }
+
+         [RegularExpression(@"^(([0-9])|([0-2][0-9])|([3][0-1])) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$", ErrorMessage = "Please enter date in the format dd MMM yyyy")]
+        public string Date { get; set; }
+
+        [RegularExpression("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Please enter the time in the format HH:mm")]
+        public string Time { get; set; }
 
         public bool Available { get; set; }
 
